@@ -1,0 +1,23 @@
+<% include partials/header %>
+<link href="https://fonts.googleapis.com/css?family=Beth+Ellen&display=swap" rel="stylesheet">
+
+<meta http-equiv="refresh" content="5;url=/" />
+<div class="container">
+        <div class="alert alert-success" role="alert">
+            You have successfully paid &#8377;<%= parseFloat(amount).toFixed(2) / 100 %>.00 using stripe. Thank You! 
+        </div>
+        <p class="lead text-center font-italic" style="font-family: 'Beth Ellen', cursive; color:orangered;">You will be redirected back in <span id="countdowntimer">5</span> seconds</p>
+</div>
+
+
+<script type="text/javascript">
+    var timeleft = 5;
+    var downloadTimer = setInterval(function(){
+    timeleft--;
+    document.getElementById("countdowntimer").textContent = timeleft;
+    if(timeleft <= 0)
+        clearInterval(downloadTimer);
+    },1000);
+</script>
+<% include partials/footer %>
+

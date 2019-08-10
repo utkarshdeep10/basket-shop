@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/icon.min.css">
+    <link rel="stylesheet" href="/stylesheets/app.css">
+    <link rel = "icon" href ="https://buildblock.com/wp-content/uploads/bimobject-icon.jpg" type = "image/x-icon">
+    <title>Basket</title>
+  </head>
+  <body>
+
+<!--Nav Bar -->
+
+<nav class="navbar navbar-expand-md navbar-light bg-light mb-2">
+        
+        <a class="navbar-brand" href="/main">
+            
+            <strong><span><i class="bimobject icon"></i></span> Home</strong>
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <% if(currentUser && currentUser.isAdmin) { %>
+                    <li class="nav-item"><a class="nav-link" href="/main/new"><span><i class="plus square icon"></i></span>Add New</a></li>
+                <% } %>
+                
+            </ul>
+            <ul class="navbar-nav navbar-right">
+                    <li class="nav-item"><a class="nav-link" href="/checkout"><span><i class="opencart icon"></i></span>Cart(
+                       <% if(typeof cart !== 'undefined') { %>
+                            <% var sum = 0 %>
+                            <% cart.forEach(function(cart){ %>
+                               <% sum += cart['qty']; %>
+                               
+                            <% }) %>
+                            <%= sum %>
+                        <% } else { %>
+                            0
+                        <% } %> 
+                    )</a></li>
+                <% if(!currentUser) { %>
+                <li class="nav-item"><a class="nav-link" href="/login"><span><i class="openid icon"></i></span>Login</a></li>
+                <% } else { %> 
+                <li class="nav-item dropdown">
+                <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span><i class="user icon"></i></span> Signed in as <%= currentUser.username %>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="nav-link" href="/logout">Logout</a>
+                <% } %>
+        </div>
+    </li>
+            </ul>
+        </div>
+</nav>
+
+<!-- Error Handling-Flash Messages -->
+<div class="container">
+        <% if(error && error.length > 0) { %>
+        <div class="alert alert-danger" role="alert">
+            <%= error %>
+        </div>
+        <% } %>
+</div>
+
+<div class="container">
+        <% if(success && success.length > 0) { %>
+        <div class="alert alert-success" role="alert">
+            <%= success %>
+        </div>
+        <% } %>
+</div>

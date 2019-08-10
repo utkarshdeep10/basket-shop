@@ -1,0 +1,81 @@
+<% include partials/header %>
+<link href="https://fonts.googleapis.com/css?family=Work+Sans:400,600&display=swap" rel="stylesheet">
+<div class="container mt-4 mb-4">
+<% if(typeof cart !== 'undefined') { %>
+<table class="table table-hover">
+        <thead class="bg-info">
+          <tr>
+            <th scope="col">Product Name</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+            <th scope="col"></th>
+            <th scope="col">Subtotal
+                
+
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+        <% cart.forEach(function(cart){ %> 
+          <% var total = 0 %>
+          <% var sub = parseFloat(cart['price']*cart['qty']).toFixed(2) %>
+          <% total = total + sub %>
+          <tr>
+            <th scope="row"><%= cart['name'] %></th>
+            <td><%= cart['qty'] %></td>
+            <td>&#8377;<%= cart['price'] %></td>
+            <td><a href="/update/<%= cart['id'] %>?action=plus" style="color: red;"><span><i class="plus square outline icon"></i></span></a> 
+            <a href="/update/<%= cart['id'] %>?action=minus" style="color: green;"><span><i class="minus square outline icon"></i></span></a> 
+            <a href="/update/<%= cart['id'] %>?action=clear"><span><i class="trash alternate outline icon"></i></span></a></td>
+            <td>&#8377;<%= sub %></td>
+          </tr>
+          <% }) %>
+          
+        </tbody>
+      </table>
+      <% var total = 0 %>
+      <% cart.forEach(function(cart){ %> 
+        <% var sub = parseFloat(cart['price']*cart['qty']).toFixed(2) %>
+        <% total += +sub %>
+     <% }); %>
+     <div class="row d-flex justify-content-center">
+   
+    <div class="col-md-6 px-2 py-3">
+      <div class="card px-4 py-4">  
+        <p class="lead" style="font-family: 'Lacquer', sans-serif;">Total Amount: &#8377;<%= parseFloat(total).toFixed(2) %>/- <span class="float-right"><a href="/clear" class="btn btn-secondary py-0" style="color: white;"><span><i class="trash icon"></i>Clear All</span></a></span></p>
+        <form action="/charge" method="post">
+          <% var amount = parseFloat(total).toFixed(2) * 100 %>  
+          <script 
+            src="https://checkout.stripe.com/checkout.js" 
+            class="stripe-button" 
+            data-key="***primary key****"
+            data-amount="<%= amount %>"
+            data-description="Thank you for buying from Basket!"
+            data-locale="auto"
+            data-currency="inr"
+            > 
+            </script>
+            <input type="hidden" name="chargeAmount" value="<%= amount %>">
+        </form>  
+      </div>
+        
+
+
+    </div>
+  </div>
+<% } else { %>
+     <div class="row">
+         <div class="col-md-12">
+             <div class="card">
+                    <section class="jumbotron mb-3 py-2  text-center">
+                            <strong class="jumbotron-heading" style="color:slategray;">Oh Snap! <i class="frown icon"></i> Cart is empty  </strong>
+                              <a href="/main" style="color: orangered;"><p class="lead"> <i class="left arrow icon"></i>Add some products</p> </a>                   
+                              </section>
+             </div>
+         </div>
+     </div>     
+<% } %>
+</div>
+
+
+<% include partials/footer %>

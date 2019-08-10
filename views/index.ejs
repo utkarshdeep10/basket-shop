@@ -1,0 +1,28 @@
+<% include partials/header %>
+<link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
+<div class="container">
+<section class="jumbotron mb-0 py-0 px-0">
+    <strong><h4 class="jumbotron-heading" style="font-family: 'Lexend Deca', sans-serif;"><span><i class="bimobject icon"></i></span>Basket</h4></strong>
+</section>
+<hr>
+  <div class="row text-center" id="productgrid">
+  <% products.forEach(function(products) { %>
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
+      <div class="card mb-3 pb-1">
+          <img src="<%= products.image %>" class="card-img-top">
+          <div class="card-body pb-0">
+            <h6 class="card-title pb-0 mb-0"> <strong><%= products.name %> </strong> </h6>
+            <p class="text-center font-italic">&#8377;<%= products.price %>/- <a href="/main/cart/<%= products._id %>" style="color: black;"><span><i class="cart plus icon"></i></span></a></p>
+            <% if(currentUser && currentUser.isAdmin) { %>
+              <form action="/main/<%= products._id %>?_method=DELETE" method="POST" style="display: inline">
+                  <button class="btn btn-xs btn-danger p-1">Delete</button>
+              </form>
+              <% } %>
+          </div>
+      </div>
+    </div>
+  <% }); %>
+  </div>
+  </div>
+  
+<% include partials/footer %>

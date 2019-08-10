@@ -1,0 +1,29 @@
+.jumbotron{
+    background-color: white;
+}
+
+.jumbotron-heading{
+    font-size: 4rem;
+    color: #2c5364
+}
+
+hr{
+    border-top: 1px solid #f8f8f8;
+    border-bottom: 1px solid rgb(0, 0, 0, 0.2);
+}
+
+.card-img-top{
+    object-fit: contain;
+}
+
+@media (min-width: 480px) {
+  .card-img-top {
+      height: 50vw;
+  }
+}
+
+@media (min-width: 768px) {
+  .card-img-top {
+      height: 15vw;
+  }
+}
